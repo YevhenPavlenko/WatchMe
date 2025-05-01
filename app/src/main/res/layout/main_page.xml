@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <ImageView
+        android:id="@+id/ivFilmBanner"
+        android:layout_width="match_parent"
+        android:layout_height="217dp"
+        android:layout_marginTop="80dp"
+        android:contentDescription="@string/film_poster"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvCategory1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
+
+        android:gravity="start|center"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="@string/category_name"
+        android:textSize="20sp"
+        android:textStyle="bold"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivFilmBanner" />
+
+    <ImageView
+        android:id="@+id/ivFilmPoster1"
+        android:layout_width="136dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/film_poster"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCategory1"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/ivFilmPoster2"
+        android:layout_width="136dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/film_poster"
+
+        app:layout_constraintStart_toEndOf="@+id/ivFilmPoster1"
+        app:layout_constraintTop_toBottomOf="@+id/tvCategory1"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/ivFilmPoster3"
+        android:layout_width="136dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/film_poster"
+
+        app:layout_constraintStart_toEndOf="@+id/ivFilmPoster2"
+        app:layout_constraintTop_toBottomOf="@+id/tvCategory1"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvCategory2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+
+        android:layout_marginTop="40dp"
+        android:gravity="start|center"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="@string/category_name"
+        android:textSize="20sp"
+
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivFilmPoster1" />
+
+    <ImageView
+        android:id="@+id/ivFilmPoster4"
+        android:layout_width="136dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/film_poster"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCategory2"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/ivFilmPoster5"
+        android:layout_width="136dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/film_poster"
+
+        app:layout_constraintStart_toEndOf="@+id/ivFilmPoster4"
+        app:layout_constraintTop_toBottomOf="@+id/tvCategory2"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/ivFilmPoster6"
+        android:layout_width="136dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/film_poster"
+
+        app:layout_constraintStart_toEndOf="@+id/ivFilmPoster5"
+        app:layout_constraintTop_toBottomOf="@+id/tvCategory2"
+        tools:srcCompat="@tools:sample/avatars" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

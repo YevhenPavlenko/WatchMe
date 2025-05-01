@@ -1,3 +1,26 @@
 <resources>
+    <!-- Global app strings -->
     <string name="app_name">WatchMe</string>
+
+    <!-- Main page strings -->
+    <string name="category_name">Назва категорії</string>
+
+    <!-- Register and login strings -->
+    <string name="logo_description">WatchMe лого</string>
+    <string name="login">Логін</string>
+    <string name="password">Пароль</string>
+    <string name="repeat_password">Повторіть пароль</string>
+    <string name="birthday">Дата народження</string>
+    <string name="create_account">Створити акаунт</string>
+    <string name="enter">Увійти</string>
+
+    <string name="register"><u>Зареєструватися</u></string>
+    <string name="account_exists"><u>Акаунт вже існує</u></string>
+
+    <!-- Film page strings -->
+    <string name="film_poster">Постер фільму</string>
+    <string name="film_info">Інформація про фільм</string> <!-- Main roles, director, budget, year, genre -->
+    <string name="title_film_description"><b>Короткий опис фільму:</b></string>
+    <string name="film_description">Опис фільму</string>
+    <string name="rent_film">Орендувати фільм</string>
 </resources>
