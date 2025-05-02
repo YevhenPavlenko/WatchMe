@@ -16,6 +16,7 @@
 
     <string name="register"><u>Зареєструватися</u></string>
     <string name="account_exists"><u>Акаунт вже існує</u></string>
+    <string name="to_main_page"><u>На головну</u></string>
 
     <!-- Film page strings -->
     <string name="film_poster">Постер фільму</string>

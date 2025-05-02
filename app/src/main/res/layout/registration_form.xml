@@ -82,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="60dp"
 
         android:ems="18"
         android:text="@string/create_account"
@@ -94,7 +94,7 @@
         android:id="@+id/tvAccountExists"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="60dp"
 
         android:alpha="0.6"
         android:autoLink="all"
@@ -107,5 +107,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
+
+    <TextView
+        android:id="@+id/tvToMainPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="12dp"
+        android:alpha="0.6"
+        android:autoLink="all"
+
+        android:linksClickable="false"
+        android:selectAllOnFocus="false"
+        android:text="@string/to_main_page"
+
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAccountExists" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
