@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+
+    android:elevation="4dp"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    app:contentInsetStart="0dp">
+
+    <ImageButton
+        android:id="@+id/btnLogo"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:src="@drawable/toolbar_logo"
+        android:contentDescription="@string/logo_description"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginStart="8dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/btnSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_search"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/search_icon"
+            android:layout_marginEnd="8dp"
+            app:tint="@android:color/black" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="@string/enter"
+            android:textColor="@android:color/black"
+            android:background="@drawable/rounded_button"
+
+            android:textSize="14sp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:layout_marginEnd="8dp" />
+    </LinearLayout>
+
+</androidx.appcompat.widget.Toolbar>

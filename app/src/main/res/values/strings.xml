@@ -24,4 +24,8 @@
     <string name="title_film_description"><b>Короткий опис фільму:</b></string>
     <string name="film_description">Опис фільму</string>
     <string name="rent_film">Орендувати фільм</string>
+
+    <!-- Toolbar strings -->
+    <string name="search_icon">Іконка пошуку</string>
+
 </resources>
