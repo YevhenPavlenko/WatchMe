@@ -24,111 +24,20 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/tvCategory1"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/ivFilmBanner">
 
-        android:gravity="start|center"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:text="@string/category_name"
-        android:textSize="20sp"
-        android:textStyle="bold"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivFilmBanner" />
-
-    <ImageView
-        android:id="@+id/ivFilmPoster1"
-        android:layout_width="136dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/film_poster"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCategory1"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <ImageView
-        android:id="@+id/ivFilmPoster2"
-        android:layout_width="136dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/film_poster"
-
-        app:layout_constraintStart_toEndOf="@+id/ivFilmPoster1"
-        app:layout_constraintTop_toBottomOf="@+id/tvCategory1"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <ImageView
-        android:id="@+id/ivFilmPoster3"
-        android:layout_width="136dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/film_poster"
-
-        app:layout_constraintStart_toEndOf="@+id/ivFilmPoster2"
-        app:layout_constraintTop_toBottomOf="@+id/tvCategory1"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/tvCategory2"
+    <LinearLayout
+        android:id="@+id/layoutGenres"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+    </ScrollView>
 
-        android:layout_marginTop="40dp"
-        android:gravity="start|center"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:text="@string/category_name"
-        android:textSize="20sp"
-
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivFilmPoster1" />
-
-    <ImageView
-        android:id="@+id/ivFilmPoster4"
-        android:layout_width="136dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/film_poster"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCategory2"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <ImageView
-        android:id="@+id/ivFilmPoster5"
-        android:layout_width="136dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/film_poster"
-
-        app:layout_constraintStart_toEndOf="@+id/ivFilmPoster4"
-        app:layout_constraintTop_toBottomOf="@+id/tvCategory2"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <ImageView
-        android:id="@+id/ivFilmPoster6"
-        android:layout_width="136dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/film_poster"
-
-        app:layout_constraintStart_toEndOf="@+id/ivFilmPoster5"
-        app:layout_constraintTop_toBottomOf="@+id/tvCategory2"
-        tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
