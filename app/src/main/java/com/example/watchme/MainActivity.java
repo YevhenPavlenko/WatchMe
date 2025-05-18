@@ -1,18 +1,12 @@
 package com.example.watchme;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.example.watchme.db.DatabaseHelper;
 import com.example.watchme.models.Category;
@@ -20,9 +14,9 @@ import com.example.watchme.models.Movie;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
+
     private DatabaseHelper dbHelper;
 
     @Override
@@ -30,37 +24,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_page);
 
+        setupToolbar();
+
         dbHelper = new DatabaseHelper(this);
 
+        initDatabase();
+        displayGenresAndMovies();
+    }
+
+    private void initDatabase() {
         try {
             dbHelper.createDatabase();
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this, "Помилка ініціалізації бази даних", Toast.LENGTH_SHORT).show();
-            return;
         }
-
-        loadToolbar();
-        displayGenresAndMovies();
-    }
-
-    private void loadToolbar() {
-        Toolbar toolbar = findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-
-        ImageButton btnLogo = findViewById(R.id.btnLogo);
-        ImageButton btnSearch = findViewById(R.id.btnSearch);
-        Button btnLogin = findViewById(R.id.btnLogin);
-
-        btnLogo.setOnClickListener(v ->
-                startActivity(new Intent(this, MainActivity.class)));
-
-        btnSearch.setOnClickListener(v ->
-                Toast.makeText(this, "Пошук недоступний", Toast.LENGTH_SHORT).show());
-
-        btnLogin.setOnClickListener(v ->
-                startActivity(new Intent(this, LoginActivity.class)));
     }
 
     private void displayGenresAndMovies() {
@@ -77,33 +55,31 @@ public class MainActivity extends AppCompatActivity {
             tvGenreName.setText(category.getName());
 
             LinearLayout llMoviePosters = genreView.findViewById(R.id.llMoviePosters);
-
-            for (int i = 0; i < category.getMovies().size(); i++) {
-                Movie movie = category.getMovies().get(i);
-
-                ImageView poster = new ImageView(this);
-                LinearLayout.LayoutParams posterParams = new LinearLayout.LayoutParams(340, 500);
-
-                if (i > 0) {
-                    posterParams.setMargins(8, 0, 40, 0);
-                } else {
-                    posterParams.setMargins(0, 0, 40, 0);
-                }
-
-                poster.setLayoutParams(posterParams);
-                poster.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-                int resId = getResources().getIdentifier(movie.posterName, "drawable", getPackageName());
-                if (resId != 0) {
-                    poster.setImageResource(resId);
-                } else {
-                    poster.setImageResource(R.drawable.placeholder);
-                }
-
-                llMoviePosters.addView(poster);
-            }
+            addMoviePostersToLayout(llMoviePosters, category.getMovies());
 
             layoutGenres.addView(genreView);
         }
+    }
+
+    private void addMoviePostersToLayout(LinearLayout container, List<Movie> movies) {
+        for (int i = 0; i < movies.size(); i++) {
+            Movie movie = movies.get(i);
+
+            ImageView poster = new ImageView(this);
+            LinearLayout.LayoutParams posterParams = new LinearLayout.LayoutParams(340, 500);
+
+            posterParams.setMargins(i > 0 ? 8 : 0, 0, 40, 0);
+
+            poster.setLayoutParams(posterParams);
+            poster.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            poster.setImageResource(getPosterResource(movie.posterName));
+
+            container.addView(poster);
+        }
+    }
+
+    private int getPosterResource(String posterName) {
+        int resId = getResources().getIdentifier(posterName, "drawable", getPackageName());
+        return resId != 0 ? resId : R.drawable.placeholder;
     }
 }
