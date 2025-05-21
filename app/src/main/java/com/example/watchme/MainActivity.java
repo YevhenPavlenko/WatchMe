@@ -1,5 +1,6 @@
 package com.example.watchme;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,6 +74,12 @@ public class MainActivity extends BaseActivity {
             poster.setLayoutParams(posterParams);
             poster.setScaleType(ImageView.ScaleType.CENTER_CROP);
             poster.setImageResource(getPosterResource(movie.posterName));
+
+            poster.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, MovieDetailsActivity.class);
+                intent.putExtra("movie_id", movie.movieId);
+                startActivity(intent);
+            });
 
             container.addView(poster);
         }

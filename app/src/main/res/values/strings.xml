@@ -22,6 +22,7 @@
     <string name="film_poster">Постер фільму</string>
     <string name="film_info">Інформація про фільм</string> <!-- Main roles, director, budget, year, genre -->
     <string name="title_film_description"><b>Короткий опис фільму:</b></string>
+    <string name="movie_description">Опис фільму</string>
     <string name="film_description">Опис фільму</string>
     <string name="rent_film">Орендувати фільм</string>
 

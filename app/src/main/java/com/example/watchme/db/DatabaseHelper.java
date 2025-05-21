@@ -95,7 +95,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Movie movie = new Movie();
-                movie.id = cursor.getInt(0);
+                movie.movieId = cursor.getInt(0);
                 movie.title = cursor.getString(1);
                 movie.posterName = cursor.getString(2);
                 list.add(movie);
@@ -103,6 +103,54 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return list;
+    }
+
+    public Movie getMovieDetails(int movieId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT m.*, d.person_id AS director_person_id, p.full_name AS director_name " +
+                "FROM Movies m " +
+                "JOIN Directors d ON m.director_id = d.director_id " +
+                "JOIN Persons p ON d.person_id = p.person_id " +
+                "WHERE m.movie_id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(movieId)});
+
+        Movie movie = null;
+
+        if (cursor.moveToFirst()) {
+            movie = new Movie();
+            movie.movieId = cursor.getInt(cursor.getColumnIndexOrThrow("movie_id"));
+            movie.title = cursor.getString(cursor.getColumnIndexOrThrow("title"));
+            movie.description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
+            movie.genre = cursor.getString(cursor.getColumnIndexOrThrow("genre"));
+            movie.releaseYear = cursor.getInt(cursor.getColumnIndexOrThrow("release_year"));
+            movie.rating = cursor.getFloat(cursor.getColumnIndexOrThrow("rating"));
+            movie.posterName = cursor.getString(cursor.getColumnIndexOrThrow("poster_name"));
+            movie.directorName = cursor.getString(cursor.getColumnIndexOrThrow("director_name"));
+
+            movie.actors = getActorsForMovie(movieId);
+        }
+
+        cursor.close();
+        return movie;
+    }
+
+    private String getActorsForMovie(int movieId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT p.full_name FROM MovieActors ma " +
+                "JOIN Actors a ON ma.actor_id = a.actor_id " +
+                "JOIN Persons p ON a.person_id = p.person_id " +
+                "WHERE ma.movie_id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(movieId)});
+
+        StringBuilder builder = new StringBuilder();
+        while (cursor.moveToNext()) {
+            if (builder.length() > 0) builder.append(", ");
+            builder.append(cursor.getString(0));
+        }
+
+        cursor.close();
+        return builder.toString();
     }
 
 }
