@@ -1,9 +1,11 @@
 package com.example.watchme.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.watchme.models.Category;
 import com.example.watchme.models.Movie;
@@ -13,8 +15,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "movies.db";
@@ -29,12 +35,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void createDatabase() throws IOException {
-        File dbFile = new File(DB_PATH);
-        if (dbFile.exists()) {
-            dbFile.delete();
+        if (checkDatabase()) {
+            return;
         }
         this.getReadableDatabase().close();
         copyDatabase();
+        insertTestUser();
     }
 
 
@@ -69,9 +75,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 
-    public SQLiteDatabase openDatabase() {
-        return SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READWRITE);
-    }
+//    public SQLiteDatabase openDatabase() {
+//        return SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READWRITE);
+//    }
 
     public List<Category> getAllCategoriesWithMovies() {
         List<Category> categoryList = new ArrayList<>();
@@ -153,4 +159,83 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return builder.toString();
     }
 
+    private void insertTestUser() {
+        if (!userExists("test")) {
+            SQLiteDatabase db = this.getWritableDatabase();
+
+            String login = "test";
+            String passwordHash = md5("1234");
+            String email = "test@example.com";
+            String phone = "+380000000000";
+            String registrationDate = "0000-00-00";
+
+            ContentValues values = new ContentValues();
+            values.put("login", login);
+            values.put("password_hash", passwordHash);
+            values.put("email", email);
+            values.put("phone_number", phone);
+            values.put("registration_date", registrationDate);
+
+            long result = db.insert("Clients", null, values);
+            if (result != -1) {
+                Log.d("DB", "Тестового користувача додано успішно");
+            } else {
+                Log.e("DB", "Не вдалося додати тестового користувача");
+            }
+        } else {
+            Log.d("DB", "Тестовий користувач вже існує");
+        }
+    }
+
+    public boolean userExists(String login) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT client_id FROM Clients WHERE login = ?", new String[]{login});
+        boolean exists = cursor.moveToFirst();
+        cursor.close();
+        return exists;
+    }
+
+    public boolean registerUser(String login, String password) {
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+
+            String passwordHash = md5(password);
+            String registrationDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+            ContentValues values = new ContentValues();
+            values.put("login", login);
+            values.put("password_hash", passwordHash);
+            values.put("registration_date", registrationDate);
+
+            long result = db.insert("Clients", null, values);
+            return result != -1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private String md5(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] bytes = md.digest(input.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : bytes) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public boolean validateUser(String login, String password) {
+        String password_hash = md5(password);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Clients WHERE login = ? AND password_hash = ?", new String[]{login, password_hash});
+        boolean exists = cursor.moveToFirst();
+        cursor.close();
+        return exists;
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.watchme;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,7 +16,9 @@ public class MovieDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_page);
 
+        Log.d("DEBUG", "Before toolbar setup");
         setupToolbar();
+        Log.d("DEBUG", "After toolbar setup");
 
         dbHelper = new DatabaseHelper(this);
 
