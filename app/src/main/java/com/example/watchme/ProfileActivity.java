@@ -13,8 +13,10 @@ import com.example.watchme.db.DatabaseHelper;
 
 public class ProfileActivity extends BaseActivity {
     private DatabaseHelper dbHelper;
+    private SharedPreferences prefs;
     private int clientId;
     private LinearLayout rentedMoviesLayout;
+    private Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +31,12 @@ public class ProfileActivity extends BaseActivity {
         setupToolbar();
 
         dbHelper = new DatabaseHelper(this);
+        btnLogout = findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(v -> logoutFromAccount());
+
         rentedMoviesLayout = findViewById(R.id.rentedMoviesLayout);
 
-        SharedPreferences prefs = getSharedPreferences("UserSession", MODE_PRIVATE);
+        prefs = getSharedPreferences("UserSession", MODE_PRIVATE);
         clientId = prefs.getInt("client_id", -1);
 
         if (clientId == -1) {
@@ -58,6 +63,17 @@ public class ProfileActivity extends BaseActivity {
             tvRegDate.setText("Дата реєстрації: " + cursor.getString(cursor.getColumnIndexOrThrow("registration_date")));
             cursor.close();
         }
+    }
+
+    private void logoutFromAccount() {
+        btnLogout.setOnClickListener(v -> {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.clear();
+            editor.apply();
+
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        });
     }
 
     private void displayRentedMovies() {
