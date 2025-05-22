@@ -2,6 +2,7 @@ package com.example.watchme;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -57,8 +58,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         btnLogo.setOnClickListener(v -> {
             if (this instanceof MainActivity) {
-                finish();
-                startActivity(getIntent());
+                recreate();
             } else {
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -71,9 +71,27 @@ public abstract class BaseActivity extends AppCompatActivity {
             Toast.makeText(this, "Search clicked", Toast.LENGTH_SHORT).show();
         });
 
-        btnLogin.setOnClickListener(v -> {
-            startActivity(new Intent(this, LoginActivity.class));
-        });
+        if (isUserLoggedIn()) {
+            btnLogin.setText("Профіль");
+            btnLogin.setOnClickListener(v -> {
+                if (this instanceof ProfileActivity) {
+                    recreate();
+                } else {
+                    Intent intent = new Intent(this, ProfileActivity.class);
+                    startActivity(intent);
+                }
+            });
+        } else {
+            btnLogin.setText("Увійти");
+            btnLogin.setOnClickListener(v -> {
+                startActivity(new Intent(this, LoginActivity.class));
+            });
+        }
+    }
+
+    protected boolean isUserLoggedIn() {
+        SharedPreferences prefs = getSharedPreferences("UserSession", MODE_PRIVATE);
+        return prefs.contains("client_id");
     }
 
     public boolean dispatchTouchEvent(MotionEvent ev) {

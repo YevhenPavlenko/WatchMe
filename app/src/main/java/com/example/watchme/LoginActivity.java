@@ -59,8 +59,14 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-        boolean isValid = dbHelper.validateUser(login, password);
-        if (isValid) {
+        int clientId = dbHelper.getClientId(login, password);
+        if (clientId != -1) {
+            getSharedPreferences("UserSession", MODE_PRIVATE)
+                    .edit()
+                    .putInt("client_id", clientId)
+                    .putString("username", login)
+                    .apply();
+
             Toast.makeText(this, "Успішний вхід", Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(this, MainActivity.class);
@@ -70,4 +76,5 @@ public class LoginActivity extends BaseActivity {
             Toast.makeText(this, "Невірний логін або пароль", Toast.LENGTH_SHORT).show();
         }
     }
+
 }

@@ -66,7 +66,7 @@
             android:layout_marginBottom="40dp" />
 
         <Button
-            android:id="@+id/rentButton"
+            android:id="@+id/btnRentMovie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/rent_film" />

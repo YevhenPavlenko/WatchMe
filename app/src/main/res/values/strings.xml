@@ -29,4 +29,9 @@
     <!-- Toolbar strings -->
     <string name="search_icon">Іконка пошуку</string>
 
+    <!-- Profile page strings -->
+    <string name="user_profile">Профіль користувача</string>
+    <string name="logout">Вийти з акаунту</string>
+    <string name="rented_films">Орендовані фільми</string>
+
 </resources>

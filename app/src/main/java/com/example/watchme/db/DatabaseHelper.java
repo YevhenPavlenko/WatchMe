@@ -35,18 +35,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void createDatabase() throws IOException {
-        if (checkDatabase()) {
+        File dbFile = new File(DB_PATH);
+        if (dbFile.exists()) {
+//            dbFile.delete();
             return;
         }
         this.getReadableDatabase().close();
         copyDatabase();
         insertTestUser();
-    }
-
-
-    private boolean checkDatabase() {
-        File dbFile = new File(DB_PATH);
-        return dbFile.exists();
     }
 
     private void copyDatabase() throws IOException {
@@ -229,13 +225,61 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean validateUser(String login, String password) {
-        String password_hash = md5(password);
-
+    public Cursor getClientById(int clientId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Clients WHERE login = ? AND password_hash = ?", new String[]{login, password_hash});
-        boolean exists = cursor.moveToFirst();
+        return db.rawQuery("SELECT * FROM Clients WHERE client_id = ?", new String[]{String.valueOf(clientId)});
+    }
+
+    public int getClientId(String login, String password) {
+        String password_hash = md5(password);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT client_id FROM Clients WHERE login = ? AND password_hash = ?", new String[]{login, password_hash});
+        if (cursor.moveToFirst()) {
+            int clientId = cursor.getInt(0);
+            cursor.close();
+            return clientId;
+        } else {
+            cursor.close();
+            return -1;
+        }
+    }
+
+    public Cursor getRentalsByClientId(int clientId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(
+                "SELECT Rentals.*, Movies.title, Movies.poster_name FROM Rentals " +
+                        "JOIN Movies ON Rentals.movie_id = Movies.movie_id " +
+                        "WHERE Rentals.client_id = ?", new String[]{String.valueOf(clientId)}
+        );
+    }
+
+    public boolean isMovieRentedByClient(int clientId, int movieId) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT 1 FROM Rentals WHERE client_id = ? AND movie_id = ? AND is_returned = 0",
+                new String[]{String.valueOf(clientId), String.valueOf(movieId)});
+
+        boolean rented = cursor.moveToFirst();
         cursor.close();
-        return exists;
+        return rented;
+    }
+
+    public void rentMovie(int clientId, int movieId) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("client_id", clientId);
+        values.put("movie_id", movieId);
+        values.put("rental_date", new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
+        values.put("is_returned", false);
+        db.insert("Rentals", null, values);
+    }
+
+    public void returnMovie(int clientId, int movieId) {
+        SQLiteDatabase db = getWritableDatabase();
+        String return_date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        db.execSQL(
+                "UPDATE Rentals SET is_returned = 1, return_date = ? " +
+                        "WHERE client_id = ? AND movie_id = ? AND is_returned = 0",
+                new Object[]{return_date, clientId, movieId});
     }
 }
