@@ -1,9 +1,7 @@
 package com.example.watchme;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,7 +41,7 @@ public class MovieDetailsActivity extends BaseActivity {
         TextView tvCharacteristics = findViewById(R.id.tvCharacteristics);
         TextView tvDescription = findViewById(R.id.tvDescription);
 
-        ivPoster.setImageResource(getResources().getIdentifier(movie.posterName, "drawable", getPackageName()));
+        ivPoster.setImageResource(getPosterResource(movie.posterName));
 
         String info = movie.title + "\n\n"
                 + "Жанр: " + movie.genre + "\n"

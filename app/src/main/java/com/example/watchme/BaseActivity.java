@@ -111,4 +111,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return super.dispatchTouchEvent(ev);
     }
+
+    public int getPosterResource(String posterName) {
+        int resId = getResources().getIdentifier(posterName, "drawable", getPackageName());
+        return resId != 0 ? resId : R.drawable.placeholder;
+    }
 }

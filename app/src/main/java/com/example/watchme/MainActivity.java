@@ -84,9 +84,4 @@ public class MainActivity extends BaseActivity {
             container.addView(poster);
         }
     }
-
-    private int getPosterResource(String posterName) {
-        int resId = getResources().getIdentifier(posterName, "drawable", getPackageName());
-        return resId != 0 ? resId : R.drawable.placeholder;
-    }
 }
