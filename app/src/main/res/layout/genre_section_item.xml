@@ -15,14 +15,22 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <LinearLayout
-        android:id="@+id/llMoviePosters"
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:gravity="center_vertical"/>
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/llMoviePosters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:gravity="center_vertical"/>
+
+    </HorizontalScrollView>
+
 </LinearLayout>

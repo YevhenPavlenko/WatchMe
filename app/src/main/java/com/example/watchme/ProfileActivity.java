@@ -181,11 +181,7 @@ public class ProfileActivity extends BaseActivity {
         params.setMargins(0, 0, 16, 0);
         poster.setLayoutParams(params);
 
-        if (posterName != null) {
-            poster.setImageResource(getResources().getIdentifier(posterName, "drawable", getPackageName()));
-        } else {
-            poster.setImageResource(R.drawable.placeholder);
-        }
+        poster.setImageResource(getPosterResource(posterName));
 
         poster.setOnClickListener(v -> openMovieDetails(movieId));
         return poster;
