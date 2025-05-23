@@ -1,15 +1,21 @@
 package com.example.watchme;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
 import com.example.watchme.db.DatabaseHelper;
+
+import java.util.regex.Pattern;
 
 public class ProfileActivity extends BaseActivity {
     private DatabaseHelper dbHelper;
@@ -53,16 +59,77 @@ public class ProfileActivity extends BaseActivity {
         finish();
     }
 
+    @SuppressLint("SetTextI18n")
     private void setupProfileInfo() {
         TextView tvLogin = findViewById(R.id.tvLogin);
+        EditText etEmail = findViewById(R.id.etEmail);
+        EditText etPhone = findViewById(R.id.etPhone);
         TextView tvRegDate = findViewById(R.id.tvRegDate);
 
         Cursor cursor = dbHelper.getClientById(clientId);
         if (cursor != null && cursor.moveToFirst()) {
-            tvLogin.setText("Логін: " + cursor.getString(cursor.getColumnIndexOrThrow("login")));
-            tvRegDate.setText("Дата реєстрації: " + cursor.getString(cursor.getColumnIndexOrThrow("registration_date")));
+            tvLogin.setText(tvLogin.getText() + " " + cursor.getString(cursor.getColumnIndexOrThrow("login")));
+            etEmail.setText(cursor.getString(cursor.getColumnIndexOrThrow("email")));
+            etPhone.setText(cursor.getString(cursor.getColumnIndexOrThrow("phone_number")));
+            tvRegDate.setText(tvRegDate.getText() + " " + cursor.getString(cursor.getColumnIndexOrThrow("registration_date")));
             cursor.close();
         }
+
+        setupContactInfo(etEmail, findViewById(R.id.btnEmailSave), "email");
+        setupContactInfo(etPhone, findViewById(R.id.btnPhoneSave), "phone");
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setupContactInfo(EditText contactField, Button saveButton, String fieldType) {
+        saveButton.setVisibility(View.GONE);
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        Runnable hideButtonRunnable = () -> saveButton.setVisibility(View.GONE);
+
+        contactField.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                handler.removeCallbacks(hideButtonRunnable);
+                saveButton.setVisibility(View.VISIBLE);
+
+                if (fieldType.equals("phone")) {
+                    String text = contactField.getText().toString();
+                    if (!text.startsWith("+380")) {
+                        contactField.setText("+380");
+                        contactField.setSelection(contactField.getText().length());
+                    }
+                }
+
+            } else {
+                handler.postDelayed(hideButtonRunnable, 100);
+            }
+        });
+
+        saveButton.setOnClickListener(v -> {
+            String newValue = contactField.getText().toString().trim();
+
+            if (fieldType.equals("email")) {
+                String emailPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                        + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+                if (!Pattern.compile(emailPattern).matcher(newValue).matches()) {
+                    Toast.makeText(this, "Некоректний email", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                dbHelper.updateClientEmail(clientId, newValue);
+                Toast.makeText(this, "Email оновлено", Toast.LENGTH_SHORT).show();
+
+            } else if (fieldType.equals("phone")) {
+                if (!newValue.startsWith("+380") || newValue.length() != 13 || !newValue.matches("\\+380\\d{9}")) {
+                    Toast.makeText(this, "Невірний номер телефону. Формат: +380XXXXXXXXX", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                dbHelper.updateClientPhone(clientId, newValue);
+                Toast.makeText(this, "Телефон оновлено", Toast.LENGTH_SHORT).show();
+            }
+
+            contactField.clearFocus();
+        });
     }
 
     private void logoutFromAccount() {
@@ -124,6 +191,7 @@ public class ProfileActivity extends BaseActivity {
         return poster;
     }
 
+    @SuppressLint("SetTextI18n")
     private LinearLayout createMovieInfoLayout(String title, String rentalDate, String returnDate, boolean isReturned, int movieId) {
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);

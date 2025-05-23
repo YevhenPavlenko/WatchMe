@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background">
@@ -35,32 +36,94 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
+                android:text="@string/label_login"
                 android:layout_marginTop="12dp"
                 android:textColor="@android:color/black" />
 
-            <TextView
-                android:id="@+id/tvEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email: test@example.com"
-                android:textSize="18sp"
-                android:layout_marginTop="4dp"
-                android:textColor="@android:color/black" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tvPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Телефон: +380..."
-                android:textSize="18sp"
-                android:layout_marginTop="4dp"
-                android:textColor="@android:color/black" />
+                <TextView
+                    android:id="@+id/tvEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_email"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black" />
+
+                <EditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:autofillHints="email"
+                    android:inputType="textEmailAddress"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:labelFor="@+id/tvEmail"
+                    tools:ignore="LabelFor" />
+
+                <Button
+                    android:id="@+id/btnEmailSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp"
+                    android:layout_gravity="center"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:padding="8dp"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tvPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_phone"
+                    android:textSize="18sp"
+
+                    android:textColor="@android:color/black" />
+
+                <EditText
+                    android:id="@+id/etPhone"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:autofillHints="phone"
+                    android:inputType="phone"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    tools:ignore="LabelFor" />
+
+                <Button
+                    android:id="@+id/btnPhoneSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp"
+                    android:layout_gravity="center"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:padding="8dp"
+                    android:layout_marginStart="8dp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tvRegDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
+                android:text="@string/label_registration_date"
                 android:layout_marginTop="4dp"
                 android:textColor="@android:color/black" />
 
@@ -73,15 +136,13 @@
                 android:background="@drawable/rounded_button"
                 android:textColor="@android:color/black" />
 
-            <!-- Divider -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
-                android:background="@android:color/darker_gray" />
+                android:background="@android:color/black" />
 
-            <!-- Section Title -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -90,7 +151,6 @@
                 android:textStyle="bold"
                 android:textColor="@android:color/black" />
 
-            <!-- Movie Rentals List -->
             <LinearLayout
                 android:id="@+id/rentedMoviesLayout"
                 android:layout_width="match_parent"

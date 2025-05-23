@@ -63,20 +63,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
-    <EditText
-        android:id="@+id/etBirthday"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
+<!--    <EditText-->
+<!--        android:id="@+id/etBirthday"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="48dp"-->
 
-        android:layout_marginTop="12dp"
-        android:autofillHints="birthday"
-        android:ems="14"
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:autofillHints="birthday"-->
+<!--        android:ems="14"-->
 
-        android:hint="@string/birthday"
-        android:inputType="date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etRepeatPassword" />
+<!--        android:hint="@string/birthday"-->
+<!--        android:inputType="date"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/etRepeatPassword" />-->
 
     <Button
         android:id="@+id/btnRegister"
@@ -89,7 +89,7 @@
         android:text="@string/create_account"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etBirthday" />
+        app:layout_constraintTop_toBottomOf="@+id/etRepeatPassword" />
 
     <TextView
         android:id="@+id/tvAccountExists"

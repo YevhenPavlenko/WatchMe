@@ -244,6 +244,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void updateClientEmail(int clientId, String newEmail) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("UPDATE Clients SET email = ? WHERE client_id = ?", new Object[]{newEmail, clientId});
+    }
+
+    public void updateClientPhone(int clientId, String newPhone) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("UPDATE Clients SET phone_number = ? WHERE client_id = ?", new Object[]{newPhone, clientId});
+    }
+
     public Cursor getRentalsByClientId(int clientId) {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(

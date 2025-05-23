@@ -31,6 +31,11 @@
 
     <!-- Profile page strings -->
     <string name="user_profile">Профіль користувача</string>
+    <string name="label_login">Логін:</string>
+    <string name="label_email">Email:</string>
+    <string name="label_phone">Телефон:</string>
+    <string name="label_registration_date">Дата реєстрації:</string>
+    <string name="save">Зберегти</string>
     <string name="logout">Вийти з акаунту</string>
     <string name="rented_films">Орендовані фільми</string>
 
