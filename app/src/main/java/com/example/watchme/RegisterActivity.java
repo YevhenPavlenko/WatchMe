@@ -25,7 +25,7 @@ public class RegisterActivity extends BaseActivity {
         etLogin = findViewById(R.id.etLogin);
         etPassword = findViewById(R.id.etPassword);
         etRepeatPassword = findViewById(R.id.etRepeatPassword);
-        etBirthday = findViewById(R.id.etBirthday);
+//        etBirthday = findViewById(R.id.etBirthday);
         Button btnRegister = findViewById(R.id.btnRegister);
 
         TextView tvAccountExists = findViewById(R.id.tvAccountExists);
@@ -46,7 +46,7 @@ public class RegisterActivity extends BaseActivity {
         String login = etLogin.getText().toString().trim();
         String password = etPassword.getText().toString();
         String repeatPassword = etRepeatPassword.getText().toString();
-        String birthday = etBirthday.getText().toString();
+//        String birthday = etBirthday.getText().toString();
 
         if (TextUtils.isEmpty(login) || TextUtils.isEmpty(password) || TextUtils.isEmpty(repeatPassword)) {
             Toast.makeText(this, "Будь ласка, заповніть усі обов'язкові поля", Toast.LENGTH_SHORT).show();
