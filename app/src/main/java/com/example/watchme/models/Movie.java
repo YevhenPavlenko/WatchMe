@@ -11,5 +11,6 @@ public class Movie {
 
     public String directorName;
     public String actors;
+    public String bannerName;
 
 }

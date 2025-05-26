@@ -2,6 +2,8 @@ package com.example.watchme;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,6 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.example.watchme.adapters.BannerAdapter;
 import com.example.watchme.db.DatabaseHelper;
 import com.example.watchme.models.Category;
 import com.example.watchme.models.Movie;
@@ -30,6 +35,7 @@ public class MainActivity extends BaseActivity {
         dbHelper = new DatabaseHelper(this);
 
         initDatabase();
+        setupBannerSlider();
         displayGenresAndMovies();
     }
 
@@ -40,6 +46,39 @@ public class MainActivity extends BaseActivity {
             e.printStackTrace();
             Toast.makeText(this, "Помилка ініціалізації бази даних", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void setupBannerSlider() {
+        Handler sliderHandler = new Handler(Looper.getMainLooper());
+        Runnable sliderRunnable;
+        int delay = 4000;
+        ViewPager2 viewPager = findViewById(R.id.viewPagerBanner);
+        List<Movie> bannerMovies = dbHelper.getFeaturedMovies();
+
+        BannerAdapter adapter = new BannerAdapter(this, bannerMovies);
+        viewPager.setAdapter(adapter);
+
+        int startPos = Integer.MAX_VALUE / 2;
+        startPos -= startPos % bannerMovies.size();
+        viewPager.setCurrentItem(startPos, false);
+
+        sliderRunnable = new Runnable() {
+            @Override
+            public void run() {
+                viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
+                sliderHandler.postDelayed(this, delay);
+            }
+        };
+        sliderHandler.postDelayed(sliderRunnable, delay);
+
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                sliderHandler.removeCallbacks(sliderRunnable);
+                sliderHandler.postDelayed(sliderRunnable, delay);
+            }
+        });
     }
 
     private void displayGenresAndMovies() {

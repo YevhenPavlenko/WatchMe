@@ -13,7 +13,8 @@
         android:paddingEnd="10dp"
         android:text="@string/category_name"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/black" />
 
     <HorizontalScrollView
         android:layout_width="match_parent"

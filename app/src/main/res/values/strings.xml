@@ -4,6 +4,7 @@
 
     <!-- Main page strings -->
     <string name="category_name">Назва категорії</string>
+    <string name="top_movies">Топ фільми</string>
 
     <!-- Register and login strings -->
     <string name="logo_description">WatchMe лого</string>

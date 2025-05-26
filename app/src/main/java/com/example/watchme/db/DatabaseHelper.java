@@ -75,6 +75,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        return SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READWRITE);
 //    }
 
+    public List<Movie> getFeaturedMovies() {
+        List<Movie> featuredMovies = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * " +
+                "FROM Movies " +
+                "ORDER BY rating DESC " +
+                "LIMIT 5", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Movie movie = new Movie();
+                movie.movieId = cursor.getInt(cursor.getColumnIndexOrThrow("movie_id"));
+                movie.title = cursor.getString(cursor.getColumnIndexOrThrow("title"));
+                movie.description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
+                movie.genre = cursor.getString(cursor.getColumnIndexOrThrow("genre"));
+                movie.releaseYear = cursor.getInt(cursor.getColumnIndexOrThrow("release_year"));
+                movie.rating = cursor.getFloat(cursor.getColumnIndexOrThrow("rating"));
+                movie.posterName = cursor.getString(cursor.getColumnIndexOrThrow("poster_name"));
+                movie.bannerName = cursor.getString(cursor.getColumnIndexOrThrow("banner_name"));
+
+                featuredMovies.add(movie);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+
+        return featuredMovies;
+    }
+
     public List<Category> getAllCategoriesWithMovies() {
         List<Category> categoryList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
